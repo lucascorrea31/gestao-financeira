@@ -1,12 +1,12 @@
-### Gestão Financeira - backend
+# Gestão Financeira - backend
 
 Sistema de gestão financeira de clínica de pilates/fisioterapia.
 
-# Features
+### Features
 - Acesso ao extrato bancário e serviço de boletos
 - Integração ao sistema GINFES para emissão de NFS-e
 
-# Integration
+### Integration
 [ ] - Banco Inter (Extrato)
 [ ] - Banco Inter (Boletos)
 [ ] - GINFES (Consulta de NFS-e)
