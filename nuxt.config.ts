@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
 
   modules: [
+    '@nuxtjs/axios',
     '@nuxtjs/tailwindcss',
     ['@nuxtjs/robots',
       {
