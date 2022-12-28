@@ -1,18 +1,8 @@
 // create a post request to get oauth token using defineEventHandler nuxt
 import { tokenPath } from './index';
-import { post } from '@/utils/http/request';
+import { HttpRequest, HttpResponse } from '~/plugins/http';
 import { ScopeType } from '../scopeType';
-
-export default defineEventHandler((event) => {
-  const data: ITokenParams = {
-    client_id: 'client_id',
-    client_secret: 'client',
-    grant_type: 'client_credentials',
-    scope: event.context.params.scope as ScopeType
-  };
-
-  return post(tokenPath, data);
-});
+import { HttpResponseStatusCode } from '~/plugins/http/types';
 
 export interface ITokenParams {
   client_id: string;
@@ -20,3 +10,25 @@ export interface ITokenParams {
   grant_type: string;
   scope: ScopeType;
 }
+
+interface ITokenResponse {
+  access_token: string;
+}
+
+export const getToken = async (scope: ScopeType): Promise<string> => {
+  const data: ITokenParams = {
+    client_id: 'client_id',
+    client_secret: 'client',
+    grant_type: 'client_credentials',
+    scope: scope
+  };
+
+  const response = await HttpRequest.post<ITokenResponse>(tokenPath, data);
+
+  if (response.statusCode === HttpResponseStatusCode.OK) {
+    return response.data.access_token;
+  }
+
+  return "";
+};
+
