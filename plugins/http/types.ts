@@ -7,16 +7,17 @@ export interface IRequestParams {
 }
 
 export interface IHttpRequest {
-  get<T>(url: string, headers?: IHeader, params?: IRequestParams): Promise<IHttpResponse<T>>;
-  post<T>(url: string, body: any, headers?: IHeader): Promise<IHttpResponse<T>>;
-  put<T>(url: string, body: any, headers?: IHeader): Promise<IHttpResponse<T>>;
-  delete<T>(url: string, headers?: IHeader): Promise<IHttpResponse<T>>;
-  patch<T>(url: string, body?: any, headers?: IHeader): Promise<IHttpResponse<T>>;
+  get<T,>(url: string, headers?: IHeader, params?: IRequestParams): Promise<IHttpResponse<T>>;
+  post<T,>(url: string, body: any, headers?: IHeader): Promise<IHttpResponse<T>>;
+  put<T,>(url: string, body: any, headers?: IHeader): Promise<IHttpResponse<T>>;
+  delete<T,>(url: string, headers?: IHeader): Promise<IHttpResponse<T>>;
+  patch<T,>(url: string, body?: any, headers?: IHeader): Promise<IHttpResponse<T>>;
 }
 
-export interface IHttpResponse<T = any> {
+export interface IHttpResponse<T> {
   statusCode: number;
-  data: string | object;
+  data: T;
+  message: string | null;
 }
 
 export enum HttpResponseStatusCode {
