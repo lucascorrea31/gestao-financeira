@@ -32,10 +32,3 @@ export const bankBalancePath = `${banking}/saldo`;
 // Payment
 export const paymentPath = `${banking}/pagamento`;
 export const paymentDarfPath = `${paymentPath}/darf`;
-
-
-// Returning
-// 200
-// 403
-// 404
-// 503
