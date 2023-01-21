@@ -3,7 +3,8 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "target": "ES2018",
-    "module": "ESNext",
+    // "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "Node",
     "lib": [
       "ESNext",
@@ -27,10 +28,11 @@
     "types": [
       "@types/node",
       "@nuxt/types",
-      "@nuxtjs/axios"
+      "@nuxtjs/axios",
+      "jest"
     ]
   },
   "exclude": [
     "node_modules"
-  ]
+  ],
 }
