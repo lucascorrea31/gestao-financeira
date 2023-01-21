@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios';
+
 export interface IHeader {
   [key: string]: string;
 }
@@ -8,13 +10,15 @@ export interface IRequestParams {
 
 export interface IHttpRequest {
   get<T,>(url: string, headers?: IHeader, params?: IRequestParams): Promise<IHttpResponse<T>>;
-  post<T,>(url: string, body: any, headers?: IHeader): Promise<IHttpResponse<T>>;
+  post<T,>(url: string, body: any, headers?: IHeader, hasHttpsAgent?: boolean): Promise<IHttpResponse<T>>;
   put<T,>(url: string, body: any, headers?: IHeader): Promise<IHttpResponse<T>>;
   delete<T,>(url: string, headers?: IHeader): Promise<IHttpResponse<T>>;
   patch<T,>(url: string, body?: any, headers?: IHeader): Promise<IHttpResponse<T>>;
 }
 
-export interface IHttpResponse<T> {
+type THttpResponse<T> = AxiosResponse<T>;
+
+export interface IHttpResponse<T> extends THttpResponse<T> {
   statusCode: number;
   data: T;
   message: string | null;

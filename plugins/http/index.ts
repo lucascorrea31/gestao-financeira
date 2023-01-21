@@ -1,5 +1,8 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { IHeader, IHttpRequest, IHttpResponse, IRequestParams } from './types';
+import { INTER_BANK_CRT, INTER_BANK_KEY } from '@/utils/config';
+import { HttpResponseStatusCode, IHeader, IHttpRequest, IHttpResponse, IRequestParams } from './types';
+
+import https from 'https';
 
 /**
  * @description Http get request
@@ -13,7 +16,12 @@ const get = async function <T,>(url: string, headers?: IHeader | undefined, para
     headers,
     params
   };
-  return (await axios.get<IHttpResponse<T>>(url, config)).data;
+  const response = await axios.get<T>(url, config);
+  return {
+    statusCode: response.status,
+    data: response.data,
+    message: response.statusText
+  } as IHttpResponse<T>;
 };
 
 /**
@@ -23,11 +31,18 @@ const get = async function <T,>(url: string, headers?: IHeader | undefined, para
  * @param {IHeader | undefined} headers 
  * @returns Promise<IHttpResponse<T>>
  */
-const post = async function <T,>(url: string, body: any, headers?: IHeader | undefined): Promise<IHttpResponse<T>> {
+const post = async function <T,>(url: string, body: any, headers?: IHeader | undefined, hasHttpsAgent?: boolean): Promise<IHttpResponse<T>> {
   const config: AxiosRequestConfig = {
-    headers
+    headers,
+    withCredentials: hasHttpsAgent,
+    httpsAgent: httpsAgent,
   };
-  return (await axios.post<IHttpResponse<T>>(url, body, config)).data;
+  const response = await axios.post<T>(url, body, config);
+  return {
+    statusCode: response.status,
+    data: response.data,
+    message: response.statusText
+  } as IHttpResponse<T>;
 };
 
 /**
@@ -41,7 +56,12 @@ const put = async function <T,>(url: string, body: any, headers?: IHeader | unde
   const config: AxiosRequestConfig = {
     headers
   };
-  return (await axios.put<IHttpResponse<T>>(url, body, config)).data;
+  const response = await axios.put<T>(url, body, config);
+  return {
+    statusCode: response.status,
+    data: response.data,
+    message: response.statusText
+  } as IHttpResponse<T>;
 };
 
 /**
@@ -54,7 +74,12 @@ const del = async function <T,>(url: string, headers?: IHeader | undefined): Pro
   const config: AxiosRequestConfig = {
     headers
   };
-  return (await axios.delete<IHttpResponse<T>>(url, config)).data;
+  const response = await axios.delete<T>(url, config);
+  return {
+    statusCode: response.status,
+    data: response.data,
+    message: response.statusText
+  } as IHttpResponse<T>;
 };
 
 /**
@@ -68,7 +93,12 @@ const patch = async function <T,>(url: string, body?: any, headers?: IHeader | u
   const config: AxiosRequestConfig = {
     headers
   };
-  return (await axios.patch<IHttpResponse<T>>(url, body, config)).data;
+  const response = await axios.patch<T>(url, body, config);
+  return {
+    statusCode: response.status,
+    data: response.data,
+    message: response.statusText
+  } as IHttpResponse<T>;
 };
 
 /**
@@ -82,3 +112,8 @@ export const HttpRequest: IHttpRequest = {
   delete: del,
   patch
 };
+
+const httpsAgent = new https.Agent({
+  cert: INTER_BANK_CRT,
+  key: INTER_BANK_KEY
+});
