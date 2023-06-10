@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import FormData from 'form-data';
 import { INTER_BANK_CRT, INTER_BANK_KEY } from '@/utils/config';
-import { HttpResponseStatusCode, IHeader, IHttpRequest, IHttpResponse, IRequestParams } from './types';
+import { IHeader, IHttpRequest, IHttpResponse, IRequestParams } from './types';
 
 import https from 'https';
 
@@ -11,10 +12,11 @@ import https from 'https';
  * @param {IRequestParams | undefined} params 
  * @returns Promise<IHttpResponse<T>>
  */
-const get = async function <T,>(url: string, headers?: IHeader | undefined, params?: IRequestParams | undefined): Promise<IHttpResponse<T>> {
+const get = async function <T,>(url: string, headers?: IHeader | undefined, params?: IRequestParams | undefined, data?: FormData | undefined): Promise<IHttpResponse<T>> {
   const config: AxiosRequestConfig = {
     headers,
-    params
+    params,
+    data,
   };
   const response = await axios.get<T>(url, config);
   return {

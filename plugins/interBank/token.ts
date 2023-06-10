@@ -7,6 +7,20 @@ import handleErrors from '../errors';
 import { INTER_BANK_CLIENT_ID, INTER_BANK_CLIENT_SECRET } from '@/utils/config';
 import FormData from 'form-data';
 
+export type TToken = {
+  accessToken: string;
+  tokenType: string;
+  isExpired: boolean;
+  scope: ScopeType;
+}
+
+export const token: TToken = {
+  accessToken: '',
+  tokenType: '',
+  isExpired: true,
+  scope: ScopeType.bankStatementRead,
+}
+
 interface ITokenParams {
   client_id: string;
   client_secret: string;
@@ -21,7 +35,7 @@ export interface ITokenResponse {
   scope: ScopeType;
 }
 
-export default async (scope: ScopeType): Promise<ITokenResponse | never> => {
+export const getToken = async function (scope: ScopeType): Promise<ITokenResponse | never> {
   const data: ITokenParams = {
     client_id: INTER_BANK_CLIENT_ID,
     client_secret: INTER_BANK_CLIENT_SECRET,

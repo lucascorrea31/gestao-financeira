@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import FormData from 'form-data';
 
 export interface IHeader {
   [key: string]: string;
@@ -9,7 +10,7 @@ export interface IRequestParams {
 }
 
 export interface IHttpRequest {
-  get<T,>(url: string, headers?: IHeader, params?: IRequestParams): Promise<IHttpResponse<T>>;
+  get<T,>(url: string, headers?: IHeader, params?: IRequestParams, data?: FormData): Promise<IHttpResponse<T>>;
   post<T,>(url: string, body: any, headers?: IHeader, hasHttpsAgent?: boolean): Promise<IHttpResponse<T>>;
   put<T,>(url: string, body: any, headers?: IHeader): Promise<IHttpResponse<T>>;
   delete<T,>(url: string, headers?: IHeader): Promise<IHttpResponse<T>>;
